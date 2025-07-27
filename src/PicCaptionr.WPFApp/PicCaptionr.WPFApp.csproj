@@ -15,4 +15,9 @@
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PicCaptionr\PicCaptionr.csproj" />
+  </ItemGroup>
+
 </Project>
