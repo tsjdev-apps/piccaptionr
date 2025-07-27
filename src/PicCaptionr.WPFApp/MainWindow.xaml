@@ -1,0 +1,186 @@
+﻿<mah:MetroWindow
+    x:Class="PicCaptionr.WPFApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:PicCaptionr.WPFApp"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mahShared="http://metro.mahapps.com/winfx/xaml/shared"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:PicCaptionr.WPFApp.ViewModels"
+    Title="PicCaptionr by tsjdev-apps.de"
+    Width="800"
+    Height="800"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <mah:MetroWindow.Resources>
+        <Style x:Key="ListBoxStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </mah:MetroWindow.Resources>
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button
+                Command="{Binding OpenWebSiteCommand}"
+                CommandParameter="https://github.com/tsjdev-apps/piccaptionr"
+                ToolTip="Open up the GitHub site">
+                <iconPacks:PackIconModern
+                    Width="22"
+                    Height="22"
+                    Kind="SocialGithubOctocat" />
+            </Button>
+            <Button
+                Command="{Binding OpenWebSiteCommand}"
+                CommandParameter="https://www.tsjdev-apps.de"
+                ToolTip="Open up the website">
+                <iconPacks:PackIconModern
+                    Width="20"
+                    Height="20"
+                    Kind="Browser" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <!--  Host Selection  -->
+            <RowDefinition Height="Auto" />
+            <!--  (AZURE) OpenAI Settings  -->
+            <RowDefinition Height="Auto" />
+            <!--  Language  -->
+            <RowDefinition Height="Auto" />
+            <!--  Additional Info  -->
+            <RowDefinition Height="Auto" />
+            <!--  Activity Log  -->
+            <RowDefinition Height="*" />
+            <!--  ProgressBar  -->
+            <RowDefinition Height="Auto" />
+            <!--  Folder Buttons  -->
+            <RowDefinition Height="Auto" />
+            <!--  Process Button  -->
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  HOST SELECTION  -->
+        <StackPanel Grid.Row="0">
+            <mah:MetroHeader Header="Select Host" />
+            <ComboBox ItemsSource="{Binding HostOptions}" SelectedItem="{Binding SelectedHost}" />
+        </StackPanel>
+
+        <!--  OPENAI SETTINGS  -->
+        <StackPanel Grid.Row="1" Margin="0,12,0,0">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedHost}" Value="OpenAI">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <mah:MetroHeader Header="OpenAI Key" />
+            <PasswordBox
+                mahShared:PasswordBoxBindingBehavior.Password="{Binding OpenAIApiKey, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                PasswordChar="*"
+                Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+            <mah:MetroHeader Margin="0,12,0,0" Header="Language Model" />
+            <ComboBox ItemsSource="{Binding DeploymentNames}" SelectedItem="{Binding SelectedDeploymentName}" />
+        </StackPanel>
+
+        <!--  AZURE OPENAI SETTINGS  -->
+        <StackPanel Grid.Row="1" Margin="0,12,0,0">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedHost}" Value="Azure OpenAI">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <mah:MetroHeader Header="Azure API Key" />
+            <PasswordBox
+                mahShared:PasswordBoxBindingBehavior.Password="{Binding AzureOpenAIApiKey, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                PasswordChar="*"
+                Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+            <mah:MetroHeader Margin="0,12,0,0" Header="Azure Endpoint" />
+            <TextBox Text="{Binding AzureOpenAIEndpoint}" />
+            <mah:MetroHeader Margin="0,12,0,0" Header="Deployment Name" />
+            <TextBox Text="{Binding DeploymentName}" />
+        </StackPanel>
+
+        <!--  LANGUAGE  -->
+        <StackPanel Grid.Row="2" Margin="0,12,0,0">
+            <mah:MetroHeader Header="Language" />
+            <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" />
+        </StackPanel>
+
+        <!--  ADDITIONAL INFORMATION  -->
+        <StackPanel Grid.Row="3" Margin="0,12,0,0">
+            <mah:MetroHeader Header="Additional Information (Optional)" />
+            <TextBox Text="{Binding AdditionalInformation}" />
+        </StackPanel>
+
+        <!--  ACTIVITY LOG  -->
+        <StackPanel Grid.Row="4" Margin="0,12,0,0">
+            <mah:MetroHeader Header="Logs" />
+        </StackPanel>
+        <ListView
+            Grid.Row="4"
+            Margin="0,36,0,0"
+            ItemContainerStyle="{StaticResource ListBoxStyle}"
+            ItemsSource="{Binding ActivityLog}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding .}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--  PROGRESS BAR  -->
+        <mah:MetroProgressBar Grid.Row="5" IsIndeterminate="{Binding IsProcessing}" />
+
+        <!--  INPUT AND OUTPUT BUTTONS  -->
+        <Grid Grid.Row="6" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Margin="0,0,6,0"
+                Command="{Binding SelectPictureFolderCommand}"
+                Content="Select Picture Folder" />
+            <Button
+                Grid.Column="1"
+                Margin="6,0,0,0"
+                Command="{Binding SelectOutputFolderCommand}"
+                Content="Select Output Folder" />
+        </Grid>
+
+        <!--  PROCESS IMAGES BUTTON  -->
+        <Button
+            Grid.Row="7"
+            Margin="0,12,0,0"
+            Command="{Binding ProcessImagesCommand}"
+            Content="Process Images"
+            Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+
+    </Grid>
+
+</mah:MetroWindow>
