@@ -12,5 +12,7 @@
 
     <Application.Styles>
         <semi:SemiTheme Locale="en-US" />
+
+        <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
     </Application.Styles>
 </Application>
