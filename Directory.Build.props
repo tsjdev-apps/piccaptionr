@@ -1,0 +1,23 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Thomas Sebastian Jensen</Authors>
+    <Company>tsjdev-apps.de</Company>
+    <Product>PicCaptionr</Product>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GlobalTargetFramework>net9.0</GlobalTargetFramework>
+  </PropertyGroup>
+
+  <!-- Project -->
+  <PropertyGroup>
+    <TargetFramework>$(GlobalTargetFramework)</TargetFramework>
+  </PropertyGroup>
+</Project>
