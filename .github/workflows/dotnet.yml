@@ -1,0 +1,31 @@
+name: Build Project for Pull Request
+
+# Trigger this workflow on pull requests targeting the main branch
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    # Use the latest Ubuntu runner provided by GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # Checkout the source code from the PR
+    - uses: actions/checkout@v4
+
+    # Setup the .NET SDK
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    # Restore NuGet dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build the project without restoring again
+    - name: Build
+      run: dotnet build --no-restore
