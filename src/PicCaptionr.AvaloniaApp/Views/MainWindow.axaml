@@ -1,0 +1,164 @@
+<Window
+    x:Class="PicCaptionr.AvaloniaApp.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:PicCaptionr.AvaloniaApp.ViewModels"
+    Title="PicCaptionr by Thomas Sebastian Jensen"
+    Width="800"
+    Height="900"
+    d:DesignHeight="900"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
+    CanResize="False"
+    Icon="/Assets/icon.ico"
+    mc:Ignorable="d">
+
+    <Grid
+        Margin="16"
+        RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto,Auto"
+        RowSpacing="12">
+
+        <!--  Host Selection  -->
+        <StackPanel Grid.Row="0">
+            <TextBlock
+                Classes="H5"
+                Text="Select Host"
+                Theme="{StaticResource TitleTextBlock}" />
+            <ComboBox
+                HorizontalAlignment="Stretch"
+                ItemsSource="{Binding HostOptions}"
+                SelectedItem="{Binding SelectedHost}" />
+        </StackPanel>
+
+        <!--  OpenAI & Azure Settings in one Row  -->
+        <StackPanel Grid.Row="1">
+            <!--  OpenAI  -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12"
+                IsVisible="{Binding SelectedHost, Converter={StaticResource EqualsConverter}, ConverterParameter=OpenAI}">
+                <StackPanel Grid.Column="0">
+                    <TextBlock
+                        Classes="H6"
+                        Text="OpenAI Key"
+                        Theme="{StaticResource TitleTextBlock}" />
+                    <TextBox Classes="RevealPasswordButton" Text="{Binding OpenAIApiKey}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock
+                        Classes="H6"
+                        Text="Language Model"
+                        Theme="{StaticResource TitleTextBlock}" />
+                    <ComboBox ItemsSource="{Binding DeploymentNames}" SelectedItem="{Binding SelectedDeploymentName}" />
+                </StackPanel>
+            </Grid>
+
+            <!--  Azure OpenAI  -->
+            <StackPanel IsVisible="{Binding SelectedHost, Converter={StaticResource EqualsConverter}, ConverterParameter=Azure OpenAI}" Spacing="12">
+                <StackPanel>
+                    <TextBlock
+                        Classes="H6"
+                        Text="Azure Endpoint"
+                        Theme="{StaticResource TitleTextBlock}" />
+                    <TextBox Text="{Binding AzureOpenAIEndpoint}" />
+                </StackPanel>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock
+                            Classes="H6"
+                            Text="Azure API Key"
+                            Theme="{StaticResource TitleTextBlock}" />
+                        <TextBox Text="{Binding AzureOpenAIApiKey}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock
+                            Classes="H6"
+                            Text="Deployment Name"
+                            Theme="{StaticResource TitleTextBlock}" />
+                        <TextBox Text="{Binding DeploymentName}" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+
+        <!--  Language  -->
+        <StackPanel Grid.Row="2">
+            <TextBlock
+                Classes="H6"
+                Text="Language"
+                Theme="{StaticResource TitleTextBlock}" />
+            <ComboBox
+                Classes="Large"
+                ItemsSource="{Binding Languages}"
+                SelectedItem="{Binding SelectedLanguage}" />
+        </StackPanel>
+
+        <!--  Additional Info  -->
+        <StackPanel Grid.Row="3">
+            <TextBlock
+                Classes="H6"
+                Text="Additional Information (Optional)"
+                Theme="{StaticResource TitleTextBlock}" />
+            <TextBox Classes="TextArea" Text="{Binding AdditionalInformation}" />
+        </StackPanel>
+
+        <!--  Activity Log  -->
+        <TextBlock
+            Grid.Row="4"
+            Classes="H6"
+            Text="Logs"
+            Theme="{StaticResource TitleTextBlock}" />
+        <ScrollViewer Grid.Row="4" Margin="0,32,0,12">
+            <ItemsControl ItemsSource="{Binding ActivityLog}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Classes="Secondary" Text="{Binding .}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!--  ProgressBar  -->
+        <ProgressBar Grid.Row="5" IsIndeterminate="{Binding IsProcessing}" />
+
+        <!--  Folder Buttons  -->
+        <Grid
+            Grid.Row="6"
+            Margin="0,12,0,0"
+            ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Classes="Secondary"
+                Command="{Binding SelectPictureFolderCommand}"
+                Content="Select Picture Folder" />
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Classes="Secondary"
+                Command="{Binding SelectOutputFolderCommand}"
+                Content="Select Output Folder" />
+        </Grid>
+
+        <!--  Process Images Button  -->
+        <Button
+            Grid.Row="7"
+            Margin="0,12,0,0"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Classes="Primary"
+            Command="{Binding ProcessImagesCommand}"
+            Content="Process Images"
+            Theme="{StaticResource SolidButton}" />
+    </Grid>
+
+</Window>

@@ -1,0 +1,18 @@
+<Application
+    x:Class="PicCaptionr.AvaloniaApp.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:PicCaptionr.AvaloniaApp.Converters"
+    xmlns:semi="https://irihi.tech/semi"
+    RequestedThemeVariant="Light">
+
+    <Application.Resources>
+        <converters:EqualsConverter x:Key="EqualsConverter" />
+    </Application.Resources>
+
+    <Application.Styles>
+        <semi:SemiTheme Locale="en-US" />
+
+        <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
+    </Application.Styles>
+</Application>
