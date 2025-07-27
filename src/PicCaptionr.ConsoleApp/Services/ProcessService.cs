@@ -140,7 +140,7 @@ public class ProcessService(
 		string outputFile
 			= Path.Combine(
 				outputPath,
-				$"piccaptionr-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.txt");
+				$"piccaptionr_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt");
 
 		processTrackerService.TrackProcess(
 			$"{TextStatics.WriteOutputProcessMessage}{Environment.NewLine}");
