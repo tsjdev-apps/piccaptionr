@@ -27,4 +27,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Semi.Avalonia" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PicCaptionr\PicCaptionr.csproj" />
+  </ItemGroup>
 </Project>
