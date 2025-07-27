@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicCaptionr.ConsoleApp", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicCaptionr.WPFApp", "src\PicCaptionr.WPFApp\PicCaptionr.WPFApp.csproj", "{F4CD1989-A712-40E6-9BCA-12441CAD0A91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicCaptionr.AvaloniaApp", "src\PicCaptionr.AvaloniaApp\PicCaptionr.AvaloniaApp.csproj", "{9FB424B5-D0CF-44D1-9E75-7C74DEB9CA33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F4CD1989-A712-40E6-9BCA-12441CAD0A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4CD1989-A712-40E6-9BCA-12441CAD0A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4CD1989-A712-40E6-9BCA-12441CAD0A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB424B5-D0CF-44D1-9E75-7C74DEB9CA33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB424B5-D0CF-44D1-9E75-7C74DEB9CA33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB424B5-D0CF-44D1-9E75-7C74DEB9CA33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB424B5-D0CF-44D1-9E75-7C74DEB9CA33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
