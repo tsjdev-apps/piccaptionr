@@ -1,5 +1,14 @@
 # 📸 PicCaptionr
 
+```
+  ____  _       ____            _   _                  
+ |  _ \(_) ___ / ___|__ _ _ __ | |_(_) ___  _ __  _ __ 
+ | |_) | |/ __| |   / _` | '_ \| __| |/ _ \| '_ \| '__|
+ |  __/| | (__| |__| (_| | |_) | |_| | (_) | | | | |   
+ |_|   |_|\___|\____\__,_| .__/ \__|_|\___/|_| |_|_|   
+                         |_|                           
+```
+
 **AI-powered tool to automatically generate Instagram-style captions for your photos – on Windows, Linux and macOS.**
 
 ![Header](/docs/header.png)
@@ -114,28 +123,19 @@ PicCaptionr                # Shared models, services, and logic
 
 ## 📷 Screenshots
 
-<details>
-  <summary>Console App</summary>
+### Console App
   
-  ![Console](/docs/console-01.png)
+![Console](/docs/console-01.png)
 
-  ![Console](/docs/console-02.png)
+![Console](/docs/console-02.png)
 
-</details>
-
-<details>
-  <summary>WPF App</summary>
+### WPF App
   
-  ![WPF](/docs/wpf-01.png)
+![WPF](/docs/wpf-01.png)
 
-</details>
-
-<details>
-  <summary>Avalonia App</summary>
+### Avalonia App
   
-  ![Avalonia](/docs/avalonia-01.png)
-
-</details>
+![Avalonia](/docs/avalonia-01.png)
 
 ## 📄 Sample Output
 
