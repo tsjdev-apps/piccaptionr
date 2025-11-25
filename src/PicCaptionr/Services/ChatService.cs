@@ -90,8 +90,7 @@ public class ChatService : IChatService
 		// Configure the chat completion options
 		ChatCompletionOptions chatCompletionsOptions = new()
 		{
-			MaxOutputTokenCount = 5000,
-			Temperature = 0.7f
+			MaxOutputTokenCount = 5000
 		};
 
 		// Build the message list with prompt and image
