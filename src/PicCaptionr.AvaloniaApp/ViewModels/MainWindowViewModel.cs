@@ -45,8 +45,9 @@ public partial class MainWindowViewModel(
 	/// </summary>
 	[ObservableProperty]
 	List<string> deploymentNames
-		= [Statics.GPT41Key, Statics.GPT41MiniKey, Statics.GPT41NanoKey,
-			Statics.GPT4oKey, Statics.GPT4oMiniKey];
+		= [Statics.GPT51Key, Statics.GPT5Key, Statics.GPT5MiniKey, Statics.GPT5NanoKey,
+			Statics.GPT41Key, Statics.GPT41MiniKey, Statics.GPT41NanoKey, Statics.GPT4oKey, 
+			Statics.GPT4oMiniKey];
 
 	/// <summary>
 	/// The selected model (deployment) to use.

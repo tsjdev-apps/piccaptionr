@@ -28,15 +28,26 @@ public class ImageService : IImageService
 				.FirstOrDefault()?
 				.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);
 
-			GeoLocation? location = directories
+			GpsDirectory? gpsDirectory = directories
 				.OfType<GpsDirectory>()
-				.FirstOrDefault()?
-				.GetGeoLocation();
+				.FirstOrDefault();
+
+			double? latitude = null;
+			double? longitude = null;
+
+			if (gpsDirectory != null)
+			{
+				if (gpsDirectory.TryGetGeoLocation(out GeoLocation location))
+				{
+					latitude = location.Latitude;
+					longitude = location.Longitude;
+				}
+			}
 
 			return new ImageMetaDataResponse(
 				captureDate,
-				location?.Latitude,
-				location?.Longitude);
+				latitude,
+				longitude);
 		}
 		catch (ImageProcessingException ex)
 		{

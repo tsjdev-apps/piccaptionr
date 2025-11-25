@@ -33,7 +33,7 @@
 
 ### 🔧 Requirements
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 - An API key from [OpenAI](https://platform.openai.com) or your Azure OpenAI deployment
 
 ### 🖥️ Console App
