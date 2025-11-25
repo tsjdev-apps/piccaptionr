@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <GlobalTargetFramework>net9.0</GlobalTargetFramework>
+    <GlobalTargetFramework>net10.0</GlobalTargetFramework>
   </PropertyGroup>
 
   <!-- Project -->
