@@ -1,5 +1,9 @@
 name: Build Project for Pull Request
 
+# Limit GITHUB_TOKEN permissions following the principle of least privilege
+permissions:
+  contents: read
+
 # Trigger this workflow on pull requests targeting the main branch
 on:
   pull_request:
