@@ -10,6 +10,7 @@ public static class Statics
 	public const string AzureOpenAiKey = "Azure OpenAI";
 
 	// OpenAI Model Keys
+	public const string GPT52Key = "gpt-5.2";
 	public const string GPT51Key = "gpt-5.1";
 	public const string GPT5Key = "gpt-5";
 	public const string GPT5MiniKey = "gpt-5-mini";
