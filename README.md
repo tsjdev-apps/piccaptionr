@@ -1,6 +1,6 @@
 # 📸 PicCaptionr
 
-```
+```plaintext
   ____  _       ____            _   _                  
  |  _ \(_) ___ / ___|__ _ _ __ | |_(_) ___  _ __  _ __ 
  | |_) | |/ __| |   / _` | '_ \| __| |/ _ \| '_ \| '__|
@@ -13,9 +13,7 @@
 
 ![Header](/docs/header.png)
 
-[![Build Console](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/build-consoleapp.yml/badge.svg)](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/build-consoleapp.yml)
-[![Build WPF](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/build-wpfapp.yml/badge.svg)](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/build-wpfapp.yml)
-[![Build Avalonia](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/build-avaloniaapp.yml/badge.svg)](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/build-avaloniaapp.yml)
+[![Release](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/release.yml/badge.svg)](https://github.com/tsjdev-apps/piccaptionr/actions/workflows/release.yml)
 
 ## ✨ Features
 
@@ -92,14 +90,24 @@ dotnet run
 
 All apps are built and published automatically via GitHub Actions:
 
-- ✅ Console builds:
-  - `win-x64`, `linux-x64`, `osx-x64`, `osx-arm64`
-- ✅ WPF builds:
-  - `win-x64` (single `.exe`)
-- ✅ Avalonia builds:
-  - `win-x64`, `linux-x64`, `osx-arm64` (self-contained)
+### Build Workflows
 
-  Artifacts are uploaded for each platform
+- ✅ Console App (cross-platform):
+  - `win-x64`, `linux-x64`, `osx-x64`, `osx-arm64`
+- ✅ WPF App (Windows only):
+  - `win-x64` (single `.exe`)
+- ✅ Avalonia App (cross-platform):
+  - `win-x64`, `linux-x64`, `osx-x64`, `osx-arm64` (self-contained)
+
+### Release Workflow
+
+When a new version tag is pushed (`v*`), a GitHub release is automatically created with:
+
+- Pre-compiled, self-contained binaries for all platforms
+- Console App and WPF App as single executable files
+- Avalonia App as complete self-contained packages
+
+**Download releases**: Visit the [Releases](https://github.com/tsjdev-apps/piccaptionr/releases) page to get the latest builds for your platform.
 
 ## 🔐 Configuration
 
