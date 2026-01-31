@@ -107,19 +107,19 @@ jobs:
         global-json-file: global.json
     
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ${{ matrix.project }}
     
     - name: Publish (WPF App)
       if: matrix.app == 'WPFApp'
-      run: dotnet publish ${{ matrix.project }} -c Release -r ${{ matrix.rid }} -p:PublishSingleFile=true -p:PublishTrimmed=false -p:IncludeNativeLibrariesForSelfExtract=true -p:SelfContained=true -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
+      run: dotnet publish ${{ matrix.project }} --no-restore -c Release -r ${{ matrix.rid }} -p:PublishSingleFile=true -p:PublishTrimmed=false -p:IncludeNativeLibrariesForSelfExtract=true -p:SelfContained=true -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
     
     - name: Publish (Avalonia App)
       if: matrix.app == 'AvaloniaApp'
-      run: dotnet publish ${{ matrix.project }} -c Release -r ${{ matrix.rid }} --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=false -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
+      run: dotnet publish ${{ matrix.project }} --no-restore -c Release -r ${{ matrix.rid }} --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=false -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
     
     - name: Publish (Console App)
       if: matrix.app == 'ConsoleApp'
-      run: dotnet publish ${{ matrix.project }} -c Release -r ${{ matrix.rid }} --self-contained -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
+      run: dotnet publish ${{ matrix.project }} --no-restore -c Release -r ${{ matrix.rid }} --self-contained -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
     
     - name: Upload artifact (Console & WPF Apps - single file)
       if: matrix.app == 'ConsoleApp' || matrix.app == 'WPFApp'
