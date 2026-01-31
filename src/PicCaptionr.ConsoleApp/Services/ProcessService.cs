@@ -171,9 +171,9 @@ public class ProcessService(
 					TextStatics.OpenAIKeyPrompt)!;
 
 			string model = consoleService.SelectFromOptions(
-				[Statics.GPT51Key, Statics.GPT5Key, Statics.GPT5MiniKey, Statics.GPT5NanoKey,
-				 Statics.GPT41Key, Statics.GPT41MiniKey, Statics.GPT41NanoKey, Statics.GPT4oKey, 
-				 Statics.GPT4oMiniKey],
+				[Statics.GPT52Key, Statics.GPT51Key, Statics.GPT5Key, Statics.GPT5MiniKey,
+				  Statics.GPT5NanoKey, Statics.GPT41Key, Statics.GPT41MiniKey, 
+				  Statics.GPT41NanoKey, Statics.GPT4oKey, Statics.GPT4oMiniKey],
 				TextStatics.OpenAIModelSelectionPrompt);
 
 			chatService.InitOpenAIChatClient(
