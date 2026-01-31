@@ -1,0 +1,190 @@
+name: Release of PicCaptionr
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build ${{ matrix.app }} - ${{ matrix.rid }}
+    runs-on: ${{ matrix.runner_os }}
+    strategy:
+      matrix:
+        include:
+          # Console App (Windows)
+          - runner_os: windows-latest
+            app: ConsoleApp
+            rid: win-x64
+            project: src/PicCaptionr.ConsoleApp/PicCaptionr.ConsoleApp.csproj
+            artifact: PicCaptionr-ConsoleApp-win-x64
+            artifact_file: PicCaptionr.ConsoleApp.exe
+          
+          # Console App (Linux)
+          - runner_os: ubuntu-latest
+            app: ConsoleApp
+            rid: linux-x64
+            project: src/PicCaptionr.ConsoleApp/PicCaptionr.ConsoleApp.csproj
+            artifact: PicCaptionr-ConsoleApp-linux-x64
+            artifact_file: PicCaptionr.ConsoleApp
+          
+          # Console App (macOS x64)
+          - runner_os: macos-latest
+            app: ConsoleApp
+            rid: osx-x64
+            project: src/PicCaptionr.ConsoleApp/PicCaptionr.ConsoleApp.csproj
+            artifact: PicCaptionr-ConsoleApp-osx-x64
+            artifact_file: PicCaptionr.ConsoleApp
+          
+          # Console App (macOS ARM64)
+          - runner_os: macos-latest
+            app: ConsoleApp
+            rid: osx-arm64
+            project: src/PicCaptionr.ConsoleApp/PicCaptionr.ConsoleApp.csproj
+            artifact: PicCaptionr-ConsoleApp-osx-arm64
+            artifact_file: PicCaptionr.ConsoleApp
+          
+          # WPF App (Windows only)
+          - runner_os: windows-latest
+            app: WPFApp
+            rid: win-x64
+            project: src/PicCaptionr.WPFApp/PicCaptionr.WPFApp.csproj
+            artifact: PicCaptionr-WPFApp-win-x64
+            artifact_file: PicCaptionr.WPFApp.exe
+          
+          # Avalonia App (Windows)
+          - runner_os: windows-latest
+            app: AvaloniaApp
+            rid: win-x64
+            project: src/PicCaptionr.AvaloniaApp/PicCaptionr.AvaloniaApp.csproj
+            artifact: PicCaptionr-AvaloniaApp-win-x64
+            artifact_file: PicCaptionr.AvaloniaApp.exe
+          
+          # Avalonia App (Linux)
+          - runner_os: ubuntu-latest
+            app: AvaloniaApp
+            rid: linux-x64
+            project: src/PicCaptionr.AvaloniaApp/PicCaptionr.AvaloniaApp.csproj
+            artifact: PicCaptionr-AvaloniaApp-linux-x64
+            artifact_file: PicCaptionr.AvaloniaApp
+          
+          # Avalonia App (macOS x64)
+          - runner_os: macos-latest
+            app: AvaloniaApp
+            rid: osx-x64
+            project: src/PicCaptionr.AvaloniaApp/PicCaptionr.AvaloniaApp.csproj
+            artifact: PicCaptionr-AvaloniaApp-osx-x64
+            artifact_file: PicCaptionr.AvaloniaApp
+          
+          # Avalonia App (macOS ARM64)
+          - runner_os: macos-latest
+            app: AvaloniaApp
+            rid: osx-arm64
+            project: src/PicCaptionr.AvaloniaApp/PicCaptionr.AvaloniaApp.csproj
+            artifact: PicCaptionr-AvaloniaApp-osx-arm64
+            artifact_file: PicCaptionr.AvaloniaApp
+    
+    steps:
+    - uses: actions/checkout@v6
+    
+    - name: Extract version from tag
+      id: version
+      run: |
+        if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+          VERSION="${GITHUB_REF#refs/tags/v}"
+        else
+          VERSION="0.0.1-dev"
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+      shell: bash
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        global-json-file: global.json
+    
+    - name: Restore dependencies
+      run: dotnet restore ${{ matrix.project }}
+    
+    - name: Publish (WPF App)
+      if: matrix.app == 'WPFApp'
+      run: dotnet publish ${{ matrix.project }} --no-restore -c Release -r ${{ matrix.rid }} -p:PublishSingleFile=true -p:PublishTrimmed=false -p:IncludeNativeLibrariesForSelfExtract=true -p:SelfContained=true -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
+    
+    - name: Publish (Avalonia App)
+      if: matrix.app == 'AvaloniaApp'
+      run: dotnet publish ${{ matrix.project }} --no-restore -c Release -r ${{ matrix.rid }} --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=false -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
+    
+    - name: Publish (Console App)
+      if: matrix.app == 'ConsoleApp'
+      run: dotnet publish ${{ matrix.project }} --no-restore -c Release -r ${{ matrix.rid }} --self-contained -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -o ./publish /p:Version=${{ steps.version.outputs.version }}
+    
+    - name: Upload artifact (Console & WPF Apps - single file)
+      if: matrix.app == 'ConsoleApp' || matrix.app == 'WPFApp'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.artifact }}
+        path: ./publish/${{ matrix.artifact_file }}
+        if-no-files-found: error
+    
+    - name: Upload artifact (Avalonia App - full directory)
+      if: matrix.app == 'AvaloniaApp'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.artifact }}
+        path: ./publish/
+        if-no-files-found: error
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+    - uses: actions/checkout@v6
+    
+    - name: Download all artifacts
+      uses: actions/download-artifact@v7
+      with:
+        path: ./artifacts
+    
+    - name: Prepare release artifacts
+      run: |
+        mkdir -p ./release
+        
+        # Console App
+        mv ./artifacts/PicCaptionr-ConsoleApp-win-x64/PicCaptionr.ConsoleApp.exe ./release/PicCaptionr-ConsoleApp-win-x64.exe
+        mv ./artifacts/PicCaptionr-ConsoleApp-linux-x64/PicCaptionr.ConsoleApp ./release/PicCaptionr-ConsoleApp-linux-x64
+        mv ./artifacts/PicCaptionr-ConsoleApp-osx-x64/PicCaptionr.ConsoleApp ./release/PicCaptionr-ConsoleApp-osx-x64
+        mv ./artifacts/PicCaptionr-ConsoleApp-osx-arm64/PicCaptionr.ConsoleApp ./release/PicCaptionr-ConsoleApp-osx-arm64
+        
+        # WPF App
+        mv ./artifacts/PicCaptionr-WPFApp-win-x64/PicCaptionr.WPFApp.exe ./release/PicCaptionr-WPFApp-win-x64.exe
+        
+        # Avalonia App (zip the directories)
+        cd ./artifacts/PicCaptionr-AvaloniaApp-win-x64 && zip -r ../../release/PicCaptionr-AvaloniaApp-win-x64.zip . && cd ../..
+        cd ./artifacts/PicCaptionr-AvaloniaApp-linux-x64 && zip -r ../../release/PicCaptionr-AvaloniaApp-linux-x64.zip . && cd ../..
+        cd ./artifacts/PicCaptionr-AvaloniaApp-osx-x64 && zip -r ../../release/PicCaptionr-AvaloniaApp-osx-x64.zip . && cd ../..
+        cd ./artifacts/PicCaptionr-AvaloniaApp-osx-arm64 && zip -r ../../release/PicCaptionr-AvaloniaApp-osx-arm64.zip . && cd ../..
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          ./release/PicCaptionr-ConsoleApp-win-x64.exe
+          ./release/PicCaptionr-ConsoleApp-linux-x64
+          ./release/PicCaptionr-ConsoleApp-osx-x64
+          ./release/PicCaptionr-ConsoleApp-osx-arm64
+          ./release/PicCaptionr-WPFApp-win-x64.exe
+          ./release/PicCaptionr-AvaloniaApp-win-x64.zip
+          ./release/PicCaptionr-AvaloniaApp-linux-x64.zip
+          ./release/PicCaptionr-AvaloniaApp-osx-x64.zip
+          ./release/PicCaptionr-AvaloniaApp-osx-arm64.zip
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -14,13 +14,14 @@ jobs:
     steps:
 
     # Checkout the source code from the PR
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     # Setup the .NET SDK
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 10.0.x
+        global-json-file: global.json
+        
 
     # Restore NuGet dependencies
     - name: Restore dependencies
