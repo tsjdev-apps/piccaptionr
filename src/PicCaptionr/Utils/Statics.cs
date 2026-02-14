@@ -20,7 +20,7 @@ public static class Statics
 	public const string GPT41NanoKey = "gpt-4.1-nano";
 	public const string GPT4oKey = "gpt-4o";
 	public const string GPT4oMiniKey = "gpt-4o-mini";
-	public const string DefaultDeploymentName = GPT4oMiniKey;
+	public const string DefaultDeploymentName = GPT5MiniKey;
 
 	// Supported Languages
 	public const string EnglishLanguage = "English";
