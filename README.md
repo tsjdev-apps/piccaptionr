@@ -22,6 +22,7 @@
 - 🗞️ Output as `.txt` file
 - 🖼️ Supports multiple images
 - ⚙️ Flexible backend: OpenAI or Azure OpenAI
+- 🎛️ OpenAI model selection (gpt-5.x, gpt-4.1, gpt-4o families)
 - 💻 Available as:
   - **Console App** (cross-platform)
   - **WPF Desktop App** (Windows only)
@@ -45,6 +46,7 @@ You will be prompted to enter:
 
 - your host (OpenAI / Azure OpenAI)
 - your API key, Deployment name and Endpoint (depending on the host)
+- your OpenAI model (when using OpenAI)
 - the path to the folder containing the images
 - target language
 - optional additional instructions
@@ -117,6 +119,8 @@ All variants require:
 - For Azure OpenAI:
   - **Endpoint URL**
   - **Deployment name**
+- For OpenAI:
+  - **Model name** (choose from gpt-5.x, gpt-4.1, gpt-4o families)
 
 Credentials are entered at runtime and never stored permanently.
 
