@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/PicCaptionr.AvaloniaApp/PicCaptionr.AvaloniaApp.csproj" />
+  <Project Path="src/PicCaptionr.ConsoleApp/PicCaptionr.ConsoleApp.csproj" />
+  <Project Path="src/PicCaptionr.WPFApp/PicCaptionr.WPFApp.csproj" />
+  <Project Path="src/PicCaptionr/PicCaptionr.csproj" />
+</Solution>
